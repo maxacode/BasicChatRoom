@@ -105,6 +105,7 @@ def write():
                     print("Exiting now!")
                     time.sleep(3)
                     client.close()
+                    exit()
                 else:
                     client.send(message.encode(format))
 

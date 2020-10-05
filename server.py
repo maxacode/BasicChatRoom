@@ -15,8 +15,11 @@ try:
     #Server Variables
     #port = int(sys.argv[2])
     #ip = str(sys.argv[1])
-    port = 444
-    ip = '192.168.176.15'
+    #port = 444
+   # ip = '192.168.176.15'
+    ip = input("Enter an IP address of Server (192.168.1.2): ")
+    port = int(input("Input the Port Number (444): "))
+
     format = 'utf8'
     clients = []
     handles = []
