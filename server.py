@@ -29,13 +29,17 @@ try:
     disconnectMsg = "/close"
     kickMsg = "/kick"
     banMsg = "/ban"
-    promoteToAdmin = "/promote"
-    userConnInfo = "/info"
-    msgToSingleClient = "/msg"
-    commandsRegular = {'/exit':'To Exit the Program',"/help":'For list of all commands','/online':'List of Who is Online'}
-    #if len(sys.argv) != 3:
-     #   print("Correct usage: script, IP address, port number")
-      #  exit()
+    promoteMsg = "/promote"
+    infoMs = "/info"
+    msgMsg= "/msg"
+    onlineMsg = "/online"
+    helpMsg = "/help"
+    regularCommands = ['/exit: To Exit the Program\n /help: For list of all commands\n /online: List of Who is Online']
+    adminCommands = regularCommands + ['\n/kick: ''To kick a user temporarily \n /ban: To fully ban a username\n']
+    #starting socket
+    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server.bind((ip, port))
+    server.listen()
 
     #Functions with features.
     def kickUser(name,fromHandle):
@@ -44,11 +48,11 @@ try:
             nameIndex = handles.index(name)
             clientToKick = clients[nameIndex]
             clients.remove(clientToKick)
-            clientToKick.send("YOu were kicked by an admin!".encode(format))
+            clientToKick.send("YOu were kicked by an admin! \n Press (enter) to exit".encode(format))
             clientToKick.close()
             handles.remove(name)
-            time.sleep(2)
             broadcast(f'{name} was kicked by an admin'.encode(format))
+
         else:
             print("Name not in hanldes")
             fromHandle.send("User not Online".encode(format))
@@ -61,10 +65,7 @@ try:
     #         broadcast(f'{origClient} got info about {name}'.encode(format))
     #
 
-    #starting socket
-    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server.bind((ip, port))
-    server.listen()
+
 
     #Funciton t send messages to everyone
     def broadcast(message):
@@ -94,89 +95,105 @@ try:
                # msg = msg.decode(format)
                # msg = msg.decode(format)
                 command = str(msg.decode(format))
-                print(command)
-                print("Command in handleMsg be fore")
-                print(command[len(handle)+2:len(handle)+3])
-               # print("The command is ---- {} index:0-{}-index:1-{}-index:2-{}".format(command, command[0],command[1],command[2]))
-               # print(command[len(handle)+2:len(handle)+3])
+
+               # Checking if user sent a command.
                 if command[len(handle)+2:len(handle)+3] == '/' and handle in adminAccounts:
                     print(f"{handle} -- is running {command}")
                     command = command[len(handle) + 2:]
 
-                    if command[:5] == ('/kick'):
+                    if kickMsg in command:
                         print("Command is kick")
-
                         whoKick = command[6:]
-                        print(whoKick)
-                       # client.send("Attempting to Kick User")
+                        # client.send("Attempting to Kick User")
                         print("Sending to kickUser def " )
                         kickUser(str(whoKick),client)
 
-                    elif command[:4] == ('/ban'):
+                    elif banMsg in command:
                         print("Command is ban")
-
                         whoBan = command[5:]
-                        kickUser(str(whoBan))
-                        #Adding handle to ban list
                         with open('Banned.txt','a+') as file:
                             file.write(f'{whoBan}\n')
-                            print("Writing user to ban file")
-                        #broadcast(f'{whoBan.encode(format)} was banned by {handle.encode(format)}')
+                            print(f"{whoBan}-wrote user to ban file")
+                        print("Sending to kickUser def " )
+                        kickUser(str(whoBan),client)
 
-                    # elif msg.decode(format).startswith('INFO'):
-                    #     whoInfo = msg.decode(format)[5:]
-                    #     infoUser(client, whoInfo)
-                    elif command[:5] == ('/help'):
-                        client.send(str(commandsRegular).encode(format))
+                    elif helpMsg in command:
+                        client.send(str(adminCommands).encode(format))
+                    elif onlineMsg in command:
+                        client.send(f'This is who is Online: \n{str(handles)}\n'.encode(format))
+
+                    elif "/exit" in command:
+                        if client in clients:
+                            # Iff error happens we weill disconnect client and remove them from our list.
+                            index = clients.index(client)
+                            clients.remove(client)
+                            client.close()
+                            handle = handles[index]
+                            handles.remove(handle)
+                            print(f'{str(handle)} : left the chat! ')
+                            broadcast(f'{str(handle)} : left the chat! '.encode(format))
+                            continue
 
                     else:
-                        print("Not a valid Admin command")
+                        client.send(f"\nNot a valid command, try these:\n {str(adminCommands)}\n".encode(format))
 
-                elif command[len(handle)+2:len(handle)+9] == '/online':
-                    client.send(f'This is who is Online: {str(handles)}'.encode(format))
+                elif onlineMsg in command:
+                    client.send(f'This is who is Online: \n{str(handles)}\n'.encode(format))
 
-                elif command[len(handle)+2:len(handle)+7] == '/help':
-                    client.send(str(commandsRegular).encode(format))
+                elif helpMsg in command:
+                    client.send(str(regularCommands).encode(format))
 
+                elif "/exit" in command:
+                    if client in clients:
+                        # Iff error happens we weill disconnect client and remove them from our list.
+                        index = clients.index(client)
+                        clients.remove(client)
+                        client.close()
+                        handle = handles[index]
+                        handles.remove(handle)
+                        print(f'{str(handle)} : left the chat! ')
+                        broadcast(f'{str(handle)} : left the chat! '.encode(format))
+                        continue
 
-                elif command[len(handle)+2:len(handle)+3] == '/':
+                elif command[len(handle)+2:len(handle)+3 ] == '/':
                     client.send("Not an Admin - Ask for a promotion".encode(format))
+                    print(f"This was done----{command}----")
+
 
                 else:
-                    print("Sending to brodcast")
-
+                   # print("Sending to brodcast")
                     broadcast(msg)
 
 
             except Exception as error:
-                print(error)
-                time.sleep(5 )
-                #Iff error happens we weill disconnect client and remove them from our list.
-                index = clients.index(client)
-                clients.remove(client)
-                client.close()
-                handle = handles[index]
-                handles.remove(handle)
-                print(f'{str(handle)} : left the chat! ')
-                broadcast(f'{str(handle)} : left the chat! '.encode(format))
-                break
+                if client in clients:
+                    print(error)
+                    time.sleep(5 )
+                    #Iff error happens we weill disconnect client and remove them from our list.
+                    index = clients.index(client)
+                    clients.remove(client)
+                    client.close()
+                    handle = handles[index]
+                    handles.remove(handle)
+                    #print(f'{str(handle)} : left the chat! ')
+                    broadcast(f'{str(handle)} : left the chat! '.encode(format))
+                    continue
 
     #FUnction to resive clients
     def take():
         while True:
             # Seeing if user        bannded
-            with open('Banned.txt', 'r') as file:
-                banned = file.readlines()
 
             try:
                 #Recivng connection from clinet
 
                 client, address = server.accept()
             except Exception as error:
-                print("Error")
-                client.send(error)
-                client.close()
-                continue
+                if client in clients:
+                    print("Error")
+                    client.send(error)
+                    client.close()
+                    continue
 
             syn = client.recv(1024).decode(format)
 
@@ -205,9 +222,12 @@ try:
             else:
                 #client.send("\nHandle Accepted \n ".encode(format))
                 print("Handle Acepted")
-            print(f'-{handle}-')
+            #print(f'-{handle}-')
             #
-                #print(banned)
+            with open('Banned.txt', 'r') as file:
+                banned = file.readlines()
+
+            print(banned)
             if handle+'\n' in banned:
                 print(f'{handle} is in Banned list - ')
                 client.send('BAN'.encode(format))
@@ -215,7 +235,7 @@ try:
                 client.close()
                 continue
             else:
-                print(print(f'-{handle}- not bannded'))
+                print(print(f'-{handle}- not banned'))
 
             try:
                 print("Trying if handle in adminAccounts")
@@ -250,7 +270,7 @@ try:
             #printing to console the handle of user and telling eveyrone who joined. and telling client they are on the serve.r
             #print(f'User with Handle: {str(handle)} connected')
             client.send(f'\nConnected to server with Handle: {str(handle)}'.encode(format))
-            broadcast("{} joined!\n".format(handle).encode(format))
+            broadcast("\n--- {} joined!---\n".format(handle).encode(format))
             client.send(f'This is who is Online: {str(handles)}'.encode(format))
             #Starting the thread to handle Clients
             threadHandle = threading.Thread(target=handleMsg, args=(client,))
@@ -262,4 +282,5 @@ try:
 except Exception as error:
     print(error)
     print("Main errror")
+
     take()

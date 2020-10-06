@@ -4,9 +4,9 @@ import socket, threading, sys, time
 #Server Variables
 #port = int(sys.argv[2])
 #ip = str(sys.argv[1])
-port = 444
+#port = 444
 #ip = 'hacked.fyi'
-ip = '192.168.176.15'
+#ip = '192.168.176.15'
 format = 'utf8'
 clients = []
 handles = []
@@ -20,17 +20,14 @@ promoteToAdmin = "/promote"
 userConnInfo = "/info"
 msgToSingleClient = "/msg"
 
-#if len(sys.argv) != 3:
- #   print("Correct usage: script, IP address, port number")
-  #  exit()
-
-#ip = input("Enter an IP address of Server (192.168.1.2): ")
-#port = int(input("Input the Port Number (444): "))
+ip = input("Enter an IP/URL of Server (192.168.1.2): ")
+port = int(input("Input the Port Number (444): "))
 #Vars from client
 print({ip},{port})
 #handle = input("What is your Handle: ")
 #password = input("Enter Password: ") if handle == 'admin' or  handle == 'jane' else print(" ")
 firstConn = True
+start = True
 
 #starting socket
 try:
@@ -44,7 +41,6 @@ except Exception as error:
 
 handle = input("Enter Your Handle: ")
 
-
 #Reciving fucntion
 def take():
     while True:
@@ -55,12 +51,9 @@ def take():
             if firstConn == True:
                 client.send('SYN'.encode(format))
                 firstConn = False
-           # message = client.recv(1024).decode(format)
-            #print(message)
-            message = client.recv(1024).decode(format)
-           # print(message)
-            #print("input: ")
 
+            message = client.recv(1024).decode(format)
+           # Chekcing if server sent special instructions.
             if "HANDLE" in message:
                # print("Handle in Message")
                 client.send(handle.encode(format))
@@ -71,12 +64,7 @@ def take():
 
                 if 'PASS' in nextMessage:
                     print("Enter Password:")
-                    #print('cleint Enter Pass Here:')
-                   # password = input("")
-                    #nextMessage = client.recv(1024).decode(format)
-                   # print(nextMessage)d
 
-                  #  print("Sending Password.")
                    # client.send(password.encode(format))
                     if client.recv(1024).decode(format) == "REFUSE":
                         print("Wrong Password - Disconnecting")
@@ -87,19 +75,26 @@ def take():
                     print("Logging Off!")
                     stopThread = True
 
+            elif "were kicked by an admin!" in message:
+                print(message)
+                stopThread = True
+
             else:
                 print(message)
-        except:
-            print("Some Error Occured")
-            time.sleep()
-            exit()
+
+        except Exception as error:
+            print(error)
+            print("Some Error Occured\nPress (Enter) to exit. ")
+            #time.sleep(2)
             break
 
 #Write fucntions
 def write():
     while True:
-        #Makisng sure user logged in
+        global stopThread
+         #Makisng sure user logged in
         if stopThread:
+            client.close()
             break
         try:
          #   print(handle)
@@ -107,36 +102,16 @@ def write():
          ##   print('before if message')
             if message[len(handle)+2:].startswith('/'):
                 if message[len(handle)+2:].startswith('/exit'):
-                    print("Exiting now!")
-                    time.sleep(3)
-                    client.close()
-                    exit()
+                    client.send(message.encode(format))
+                    stopThread = True
                 else:
                     client.send(message.encode(format))
-
-            # if message[len(handle)+2:].startswith('/'):
-                #Maksing sure its admin
-               # if handle == 'admin':
-                    #If Kick in message
-               #     if message[len(handle)+2:].startswith('/ban'):
-                #        client.send(f'BAN {message[len(handle)+2+5:]}'.encode(format))
-                    # If /ban in message
-                   # elif message[len(handle) + 2:].startswith('/ban'):
-                    #    client.send(f'BAN {message[len(handle)+2+5:]}'.encode(format))
-                    # If /info in message
-                    # elif message[len(handle) + 2:].startswith('/info'):
-                    #     client.send(f'INFO {message[len(handle)+2+6:]}'.encode(format))
-              #  else:
-               #     print("Command only allowed for Admin")
-           # else:
             else:
-            #    print('sending to cly. ')
                 client.send(message.encode(format))
-
         except Exception as error:
             print("Error in write functions")
             print(error)
-            pass
+            break
 
 
 #Threads for taking and writing
