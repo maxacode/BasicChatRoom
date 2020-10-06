@@ -4,9 +4,9 @@ import socket, threading, sys, time
 #Server Variables
 #port = int(sys.argv[2])
 #ip = str(sys.argv[1])
-#port = 444
-#ip = '18.223.49.228'
-#ip = '192.168.176.15'
+port = 444
+#ip = 'hacked.fyi'
+ip = '192.168.176.15'
 format = 'utf8'
 clients = []
 handles = []
@@ -24,12 +24,13 @@ msgToSingleClient = "/msg"
  #   print("Correct usage: script, IP address, port number")
   #  exit()
 
-ip = input("Enter an IP address of Server (192.168.1.2): ")
-port = int(input("Input the Port Number (444): "))
+#ip = input("Enter an IP address of Server (192.168.1.2): ")
+#port = int(input("Input the Port Number (444): "))
 #Vars from client
 print({ip},{port})
 #handle = input("What is your Handle: ")
 #password = input("Enter Password: ") if handle == 'admin' or  handle == 'jane' else print(" ")
+firstConn = True
 
 #starting socket
 try:
@@ -47,11 +48,15 @@ handle = input("Enter Your Handle: ")
 #Reciving fucntion
 def take():
     while True:
-        global stopThread
+        global stopThread, firstConn
         if stopThread:
             break
         try:
-
+            if firstConn == True:
+                client.send('SYN'.encode(format))
+                firstConn = False
+           # message = client.recv(1024).decode(format)
+            #print(message)
             message = client.recv(1024).decode(format)
            # print(message)
             #print("input: ")

@@ -15,10 +15,10 @@ try:
     #Server Variables
     #port = int(sys.argv[2])
     #ip = str(sys.argv[1])
-    #port = 444
-   # ip = '192.168.176.15'
-    ip = input("Enter an IP address of Server (192.168.1.2): ")
-    port = int(input("Input the Port Number (444): "))
+    port = 444
+    ip = '192.168.176.15'
+    #ip = input("Enter an IP address of Server (192.168.1.2): ")
+    #port = int(input("Input the Port Number (444): "))
 
     format = 'utf8'
     clients = []
@@ -168,11 +168,26 @@ try:
             with open('Banned.txt', 'r') as file:
                 banned = file.readlines()
 
-            #Recivng connection from clinet
-            client, address = server.accept()
+            try:
+                #Recivng connection from clinet
+
+                client, address = server.accept()
+            except Exception as error:
+                print("Error")
+                client.send(error)
+                client.close()
+                continue
+
+            syn = client.recv(1024).decode(format)
+
+            if syn != 'SYN':
+                client.close()
+                continue
+
+
             print(f'!!!!!!!{str(client)} wth {str(address)}: has connected')
             #SYN TO Client
-           # client.send('MOTD: Welcome to Hacked.FYI Chat Room'.encode(format))
+          #  client.send('MOTD: Welcome to Hacked.FYI Chat Room'.encode(format))
 
             #ACK and Handle To client
             client.send('HANDLE'.encode(format))
@@ -180,6 +195,16 @@ try:
 
             #Handle From client
             handle = client.recv(1024).decode(format)
+            #Chekcing if handle is less than 15 chars
+            if len(handle) >= 20:
+                client.send('Please have a handle less than 15 char'.encode(format))
+                print("Handle bigger than 20 chars")
+                #print(error)
+                client.close()
+                continue
+            else:
+                #client.send("\nHandle Accepted \n ".encode(format))
+                print("Handle Acepted")
             print(f'-{handle}-')
             #
                 #print(banned)
@@ -237,4 +262,4 @@ try:
 except Exception as error:
     print(error)
     print("Main errror")
-    pass
+    take()
