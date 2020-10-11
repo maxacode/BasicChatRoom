@@ -1,12 +1,9 @@
 #importing socket and threading to work
-import socket, threading, sys, time
+import socket, threading, sys, time, atexit
+from os import system
 
-#Server Variables
-#port = int(sys.argv[2])
-#ip = str(sys.argv[1])
-#port = 444
-#ip = 'hacked.fyi'
-#ip = '192.168.176.15'
+
+#Local Vars
 format = 'utf8'
 clients = []
 handles = []
@@ -20,8 +17,13 @@ promoteToAdmin = "/promote"
 userConnInfo = "/info"
 msgToSingleClient = "/msg"
 
-ip = input("Enter an IP/URL of Server (192.168.1.2): ")
+#Port and IP config options. Either static or ask on launch
+#port = 12000
+ip = '127.0.0.1'
+#ip = input("Enter an IP address of Server (192.168.1.2): ")
 port = int(input("Input the Port Number (444): "))
+#ip = input("Enter an IP/URL of Server (192.168.1.2): ")
+
 #Vars from client
 print({ip},{port})
 #handle = input("What is your Handle: ")
@@ -40,6 +42,7 @@ except Exception as error:
     exit()
 
 handle = input("Enter Your Handle: ")
+system("title "+(f'Connected to: {ip} with Port: {port} and Handle: {handle}'))
 
 #Reciving fucntion
 def take():
@@ -64,11 +67,13 @@ def take():
 
                 if 'PASS' in nextMessage:
                     print("Enter Password:")
-
+                    msg = client.recv(1024).decode(format)
                    # client.send(password.encode(format))
-                    if client.recv(1024).decode(format) == "REFUSE":
+                    if msg == "REFUSE":
                         print("Wrong Password - Disconnecting")
                         stopThread = True
+                    else:
+                        print(msg)
 
                 elif nextMessage == "BAN":
                     print("You are Banned! Hint:Try another username")
@@ -113,6 +118,7 @@ def write():
             print(error)
             break
 
+ 
 
 #Threads for taking and writing
 threadTake = threading.Thread(target=take)
@@ -120,3 +126,4 @@ threadTake.start()
 
 threadWrite = threading.Thread(target=write)
 threadWrite.start()
+

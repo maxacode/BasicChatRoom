@@ -8,22 +8,22 @@
         #Logg connection info
 try:
     #importing socket and threading to work
-    import socket, threading,time
+    import socket, threading,time,random, uuid, hashlib
+    from os import system
     #from socket import *
     from threading import Thread
-
-    #Server Variables
-    #port = int(sys.argv[2])
-    #ip = str(sys.argv[1])
-    port = 444
-    ip = '192.168.176.15'
+    #Port and IP config options. Either static or ask on launch
+    port = 12000
+    ip = '127.0.0.1'
     #ip = input("Enter an IP address of Server (192.168.1.2): ")
     #port = int(input("Input the Port Number (444): "))
 
+    #local Vars
     format = 'utf8'
     clients = []
     handles = []
-    adminAccounts = {'admin':'adminpass','jane':'janepass'}
+    adminAccounts = []
+    stopThread = False
 
     #Custom Messages Varaibles
     disconnectMsg = "/close"
@@ -36,10 +36,62 @@ try:
     helpMsg = "/help"
     regularCommands = ['/exit: To Exit the Program\n /help: For list of all commands\n /online: List of Who is Online']
     adminCommands = regularCommands + ['\n/kick: ''To kick a user temporarily \n /ban: To fully ban a username\n']
-    #starting socket
-    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server.bind((ip, port))
-    server.listen()
+   
+   #starting socket
+    try:
+        print(f'Trying: {ip} and {port}')
+        server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        server.bind((ip, port))
+        server.listen()
+        server.status
+    except Exception as error:
+        print(f'THis error occured when starting server socket: {error}')
+        #INcreasing socket port number by random 1 to 999 if first bind fails.
+        a = random.randint(1,999)
+        port += a
+        print(f'Trying: {ip} and {port}')
+
+        server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        server.bind((ip, port))
+        server.listen()
+        system("title "+(f'Connected to: {ip} with Port: {port}.'))
+
+    #Creating adminaccounts from user input
+    while True:
+        with open('.adminAccounts.encrypted','r') as file:
+            adminAccounts = dict(map(str.split, file))
+            print(f'These are the existing admin accounts: {adminAccounts}\n')
+            cont = input("Would you like to add more admin Accounts? (y/n): ") 
+            if cont == 'n': 
+                break
+        adminUsers = input("\nEnter a username for a admin account (Type in 'done' when finished): ")
+        if adminUsers == 'done':
+            break
+        #Making sure passwords match
+        while True:
+            adminPass = input("Enter Password: ")
+            adminPass2 = input("Re-Enter Password: ") 
+            if adminPass2 != adminPass:
+                print("Passwords dont match - lets try again")
+                continue
+            else:
+                print(f'Account: {adminUsers} with password: {adminPass} was added to server admins! \n')
+                break
+        #hashing password
+        salt = uuid.uuid4().hex
+        print(salt)
+        hashedPass = hashlib.sha256(salt.encode() + adminPass.encode()).hexdigest() + ':' + salt
+
+        #writing account info to file and adding it to varible that will be used to check later. 
+        with open('.adminAccounts.encrypted','a+') as file:
+            account = (adminUsers + ' ' + hashedPass) 
+            file.write(f'{account}\n')
+            print(f"{account}-wrote user to adminAccounts file")
+
+    print("-----Done with Admin account creation!-----\n")
+    #Getting accounts from file 
+    with open('.adminAccounts.encrypted','r') as file:
+        adminAccounts = dict(map(str.split, file))
 
     #Functions with features.
     def kickUser(name,fromHandle):
@@ -63,9 +115,6 @@ try:
     #         info = clients(clientInfo)
     #         origClient.send(f"Info for user {name} is {info}".encode(format))
     #         broadcast(f'{origClient} got info about {name}'.encode(format))
-    #
-
-
 
     #Funciton t send messages to everyone
     def broadcast(message):
@@ -74,11 +123,7 @@ try:
         #sending a msg to all the clinets in teh client list
         for client in clients:
             client.send(message)
-            #print("sent to all clients ")
-            #Printing messages to server console screen.
-            #print({str(message.decode(format))})
-
-    # #Funciton t send messages to single user
+     # #Funciton t send messages to single user
     # def direct(client, message):
     #     #sending a msg to all the clinets in teh client list
     #     client.send(message)
@@ -91,9 +136,6 @@ try:
             try:
                 handle = handles[clients.index(client)]
                 msg = client.recv(1024)
-
-               # msg = msg.decode(format)
-               # msg = msg.decode(format)
                 command = str(msg.decode(format))
 
                # Checking if user sent a command.
@@ -159,20 +201,17 @@ try:
                     client.send("Not an Admin - Ask for a promotion".encode(format))
                     print(f"This was done----{command}----")
 
-
                 else:
                    # print("Sending to brodcast")
                     broadcast(msg)
 
-
             except Exception as error:
                 if client in clients:
                     print(error)
-                    time.sleep(5 )
-                    #Iff error happens we weill disconnect client and remove them from our list.
+                     #Iff error happens we weill disconnect client and remove them from our list.
                     index = clients.index(client)
                     clients.remove(client)
-                    client.close()
+                    #client.close()
                     handle = handles[index]
                     handles.remove(handle)
                     #print(f'{str(handle)} : left the chat! ')
@@ -182,11 +221,9 @@ try:
     #FUnction to resive clients
     def take():
         while True:
-            # Seeing if user        bannded
 
             try:
                 #Recivng connection from clinet
-
                 client, address = server.accept()
             except Exception as error:
                 if client in clients:
@@ -201,14 +238,12 @@ try:
                 client.close()
                 continue
 
-
             print(f'!!!!!!!{str(client)} wth {str(address)}: has connected')
             #SYN TO Client
           #  client.send('MOTD: Welcome to Hacked.FYI Chat Room'.encode(format))
 
             #ACK and Handle To client
             client.send('HANDLE'.encode(format))
-
 
             #Handle From client
             handle = client.recv(1024).decode(format)
@@ -227,7 +262,9 @@ try:
             with open('Banned.txt', 'r') as file:
                 banned = file.readlines()
 
+        # Seeing if user        bannded
             print(banned)
+
             if handle+'\n' in banned:
                 print(f'{handle} is in Banned list - ')
                 client.send('BAN'.encode(format))
@@ -238,37 +275,50 @@ try:
                 print(print(f'-{handle}- not banned'))
 
             try:
-                print("Trying if handle in adminAccounts")
+                with open('.adminAccounts.encrypted','r') as file:
+                    adminAccounts = dict(map(str.split, file))
+                           # print(adminAccounts)
+                    #adminAccounts = {'admin':'adminpass','jane':'janepass'}
+                print(adminAccounts)
+
+                print("Trying if handle in adminAccounts {}".format(handle))
                 #Seeing if user has admin rights
+
                 if handle in adminAccounts:
                     print("Handle in admin accounts")
 
                     client.send("PASS".encode(format))
 
                     password = client.recv(1024).decode(format)
+                    password = password[len(handle)+2:]
                     print(f'-{password}-')
                     print(password[len(handle)+2:])
                     #Checking if password is right
-                    if password[len(handle)+2:] != adminAccounts[handle]:
+                    hashPass, salt = adminAccounts[handle].split(':')
+                    enteredHashedPass = hashlib.sha256(salt.encode()+password.encode()).hexdigest()
 
-                        print("Wrong pass word")
+                    if enteredHashedPass != hashPass:
+                        print("WRong password")
                         client.send("REFUSE".encode(format))
-                        client.close()
+                        client.close()  
                         continue
+
                     else:
                         client.send('You are an Admin! Welcome'.encode(format))
                         print(f'Admin: {handle} has connected to server')
+                else:
+                    print("User not in adminAccounts")
             except Exception as error:
                 print("Error during auth of admin user")
                 print(error)
                 pass
+
             #Adding new user info to our list
             print("Adding to clients list")
             handles.append(handle)
             clients.append(client)
 
             #printing to console the handle of user and telling eveyrone who joined. and telling client they are on the serve.r
-            #print(f'User with Handle: {str(handle)} connected')
             client.send(f'\nConnected to server with Handle: {str(handle)}'.encode(format))
             broadcast("\n--- {} joined!---\n".format(handle).encode(format))
             client.send(f'This is who is Online: {str(handles)}'.encode(format))
@@ -276,11 +326,41 @@ try:
             threadHandle = threading.Thread(target=handleMsg, args=(client,))
             threadHandle.start()
 
+    #Function for teh server to write commands and reboot
+    def write():
+        while True:
+            global stopThread
+            if stopThread:
+                for x in clients:
+                    x.close()
+                    break
+            #input from server
+            serverName = '-----Server: '
+            message =input('')
+            #checking if special command. 
+            if message.startswith('/'):
+                closeIn = int(input("When to shut down server: "))
+                howLongDown = int(input("How long will it be down: "))
+
+                if message.startswith('/close'):
+                    reason = ('{} \n Will shut down in: {} Seconds! \n and will come back in {} Min!\n'.format(serverName, message[7:],closeIn, howLongDown))
+                   # reason = serverName + message[7:] + ' Will shut down in: ' + {closeIn} + 'Min! \n ' 
+                    broadcast(reason.encode(format))
+                    time.sleep(closeIn)
+                    stopThread = True
+            else:
+                broadcast(f'\n {serverName} {message} \n'.encode(format))
+
 
     print(f"Starting Server on {ip,port}")
-    take()
+    #take()
+    threadTake = threading.Thread(target=take)
+    threadTake.start()
+
+    threadWrite = threading.Thread(target=write)
+    threadWrite.start()
+
 except Exception as error:
     print(error)
     print("Main errror")
-
-    take()
+    input('Press Enter to exit')
