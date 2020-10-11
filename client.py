@@ -19,8 +19,8 @@ msgToSingleClient = "/msg"
 
 #Port and IP config options. Either static or ask on launch
 #port = 12000
-ip = '127.0.0.1'
-#ip = input("Enter an IP address of Server (192.168.1.2): ")
+#ip = '127.0.0.1'
+ip = input("Enter an IP/Hose address of Server (192.168.1.2/chatserver.com): ")
 port = int(input("Input the Port Number (444): "))
 #ip = input("Enter an IP/URL of Server (192.168.1.2): ")
 
