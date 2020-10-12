@@ -1,0 +1,144 @@
+10/12/2020 05:44:38 PM:CRITICAL:Line: 51 : Type: <class 'TypeError'> : Main TRY Error: can only concatenate str (not "int") to str
+10/12/2020 05:44:40 PM:CRITICAL:Line: 51 : Type: <class 'TypeError'> : Main TRY Error: can only concatenate str (not "int") to str
+10/12/2020 05:44:42 PM:CRITICAL:Line: 51 : Type: <class 'TypeError'> : Main TRY Error: can only concatenate str (not "int") to str
+10/12/2020 05:45:35 PM:CRITICAL:Line: 51 : Type: <class 'TypeError'> : Main TRY Error: can only concatenate str (not "int") to str
+10/12/2020 06:02:51 PM:CRITICAL:Line: 45 : Type: <class 'TypeError'> : Starting Socket: an integer is required (got type str)
+10/12/2020 06:02:51 PM:CRITICAL:Line: 52 : Type: <class 'TypeError'> : Main TRY Error: can only concatenate str (not "int") to str
+10/12/2020 06:04:00 PM:INFO:Account: test was added to server admins! 
+10/12/2020 06:04:03 PM:INFO:
+ NEW INSTANCE 
+
+10/12/2020 06:04:03 PM:INFO:Starting Server on: ('127.0.0.1', 444)
+10/12/2020 06:04:11 PM:INFO:b'\n -----Server:   \n'
+10/12/2020 06:04:44 PM:INFO:b'\n -----Server:  sdf \n'
+10/12/2020 06:04:44 PM:INFO:b'\n -----Server:  sdf \n'
+10/12/2020 06:05:06 PM:INFO:New Client Connected with: <socket.socket fd=420, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 444), raddr=('127.0.0.1', 51429)> and ('127.0.0.1', 51429)
+10/12/2020 06:05:09 PM:INFO:Clients Handle: test
+10/12/2020 06:05:11 PM:INFO:b'\n--- test joined!---\n'
+10/12/2020 06:05:14 PM:INFO:b'test: ldsf'
+10/12/2020 06:05:15 PM:INFO:b'test: asdflasd'
+10/12/2020 06:05:17 PM:INFO:test -- is running test: /help
+10/12/2020 06:05:18 PM:INFO:test -- is running test: /online
+10/12/2020 06:05:21 PM:INFO:test -- is running test: /kick joe
+10/12/2020 06:05:21 PM:INFO:User: <socket.socket fd=420, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 444), raddr=('127.0.0.1', 51429)> tried to kick: joe but they were not online!
+10/12/2020 06:05:22 PM:INFO:b'test: '
+10/12/2020 06:05:23 PM:INFO:b'test: lasjdf'
+10/12/2020 06:06:58 PM:CRITICAL:Line: 141 : Type: <class 'ConnectionResetError'> : Handle Msg Fun: [WinError 10054] An existing connection was forcibly closed by the remote host
+10/12/2020 06:06:58 PM:INFO:b'test : left the chat! '
+10/12/2020 06:07:10 PM:INFO:
+ ----- NEW INSTANCE -----
+
+10/12/2020 06:07:12 PM:INFO:Server Started on: ('127.0.0.1', 213)
+10/12/2020 06:07:15 PM:INFO:b'\n -----Server:  asdf \n'
+10/12/2020 06:07:16 PM:INFO:b'\n -----Server:  sdf \n'
+10/12/2020 06:07:40 PM:INFO:New Client Connected with: <socket.socket fd=440, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 213), raddr=('127.0.0.1', 51470)> and ('127.0.0.1', 51470)
+10/12/2020 06:07:41 PM:INFO:Clients Handle: alskdf
+10/12/2020 06:07:41 PM:INFO:b'\n--- alskdf joined!---\n'
+10/12/2020 06:07:42 PM:INFO:b'alskdf: asdfj'
+10/12/2020 06:07:43 PM:INFO:b'alskdf: alsdfj'
+10/12/2020 06:08:08 PM:CRITICAL:Line: 143 : Type: <class 'ConnectionResetError'> : Handle Msg Fun: [WinError 10054] An existing connection was forcibly closed by the remote host
+10/12/2020 06:08:08 PM:INFO:b'alskdf : left the chat! '
+10/12/2020 06:08:22 PM:INFO:
+
+ ----- NEW INSTANCE -----
+
+10/12/2020 06:08:23 PM:INFO:Server Started on: ('127.0.0.1', 122)
+10/12/2020 06:08:30 PM:INFO:b'\n -----Server:  sdf \n'
+10/12/2020 06:08:30 PM:INFO:b'\n -----Server:  asdf \n'
+10/12/2020 06:08:31 PM:INFO:b'\n -----Server:  asdf \n'
+10/12/2020 06:08:32 PM:INFO:b'\n -----Server:  sadf \n'
+10/12/2020 06:08:32 PM:INFO:b'\n -----Server:  asf \n'
+10/12/2020 06:08:32 PM:INFO:b'\n -----Server:  as \n'
+10/12/2020 06:08:32 PM:INFO:b'\n -----Server:  d \n'
+10/12/2020 06:08:33 PM:INFO:b'\n -----Server:   \n'
+10/12/2020 06:08:33 PM:INFO:b'\n -----Server:   \n'
+10/12/2020 06:08:33 PM:INFO:b'\n -----Server:   \n'
+10/12/2020 06:19:59 PM:INFO:
+
+ ----- NEW INSTANCE -----
+
+10/12/2020 06:20:03 PM:INFO:Server Started on: ('127.0.0.1', 123)
+10/12/2020 06:22:02 PM:INFO:New Client Connected with: <socket.socket fd=440, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 123), raddr=('127.0.0.1', 51710)> and ('127.0.0.1', 51710)
+10/12/2020 06:22:10 PM:INFO:Clients Handle: joh
+10/12/2020 06:22:10 PM:INFO:b'\n--- joh joined!---\n'
+10/12/2020 06:22:10 PM:INFO:b'\n -----Server:  sdf \n'
+10/12/2020 06:22:17 PM:INFO:b'\n -----Server:  dsf \n'
+10/12/2020 06:22:19 PM:INFO:b'joh: sdf'
+10/12/2020 06:22:20 PM:INFO:b'joh: asdf'
+10/12/2020 06:22:20 PM:INFO:b'joh: asdf'
+10/12/2020 06:23:32 PM:CRITICAL:Line: 143 : Type: <class 'ConnectionResetError'> : Handle Msg Fun: [WinError 10054] An existing connection was forcibly closed by the remote host
+10/12/2020 06:23:32 PM:INFO:b'joh : left the chat! '
+10/12/2020 06:23:38 PM:INFO:New Client Connected with: <socket.socket fd=468, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 123), raddr=('127.0.0.1', 51731)> and ('127.0.0.1', 51731)
+10/12/2020 06:23:40 PM:INFO:Clients Handle: sadf
+10/12/2020 06:23:40 PM:INFO:b'\n--- sadf joined!---\n'
+10/12/2020 06:23:41 PM:INFO:b'sadf: sdf'
+10/12/2020 06:23:41 PM:INFO:b'sadf: adf'
+10/12/2020 06:23:41 PM:INFO:b'sadf: adf'
+10/12/2020 06:23:42 PM:INFO:b'sadf: sadf'
+10/12/2020 06:23:42 PM:INFO:b'sadf: asd'
+10/12/2020 06:23:42 PM:INFO:b'sadf: f'
+10/12/2020 06:24:37 PM:INFO:New Client Connected with: <socket.socket fd=476, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 123), raddr=('127.0.0.1', 51745)> and ('127.0.0.1', 51745)
+10/12/2020 06:24:39 PM:INFO:Clients Handle: jojj
+10/12/2020 06:24:39 PM:INFO:b'\n--- jojj joined!---\n'
+10/12/2020 06:24:40 PM:INFO:b'jojj: lajdf'
+10/12/2020 06:24:41 PM:INFO:b'jojj: asdf'
+10/12/2020 06:27:18 PM:CRITICAL:Line: 143 : Type: <class 'ConnectionResetError'> : Handle Msg Fun: [WinError 10054] An existing connection was forcibly closed by the remote host
+10/12/2020 06:27:18 PM:INFO:b'jojj : left the chat! '
+10/12/2020 06:27:23 PM:INFO:New Client Connected with: <socket.socket fd=492, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 123), raddr=('127.0.0.1', 51813)> and ('127.0.0.1', 51813)
+10/12/2020 06:27:24 PM:INFO:Clients Handle: jo
+10/12/2020 06:27:24 PM:INFO:b'\n--- jo joined!---\n'
+10/12/2020 06:27:25 PM:INFO:b'jo: alsdasd'
+10/12/2020 06:27:26 PM:INFO:b'jo: f'
+10/12/2020 06:29:18 PM:INFO:New Client Connected with: <socket.socket fd=540, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 123), raddr=('127.0.0.1', 51851)> and ('127.0.0.1', 51851)
+10/12/2020 06:29:19 PM:INFO:Clients Handle: jdf
+10/12/2020 06:29:19 PM:INFO:b'\n--- jdf joined!---\n'
+10/12/2020 06:29:20 PM:INFO:b'jdf: dsf'
+10/12/2020 06:29:20 PM:INFO:b'jdf: a'
+10/12/2020 06:29:20 PM:INFO:b'jdf: sdf'
+10/12/2020 06:34:42 PM:INFO:
+
+ ----- NEW INSTANCE -----
+
+10/12/2020 06:34:49 PM:INFO:Account: test was added to server admins! 
+10/12/2020 06:34:50 PM:INFO:Server Started on: ('127.0.0.1', 123)
+10/12/2020 06:34:51 PM:INFO:b'\n -----Server:  lasdjf \n'
+10/12/2020 06:35:08 PM:INFO:New Client Connected with: <socket.socket fd=412, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 123), raddr=('127.0.0.1', 51922)> and ('127.0.0.1', 51922)
+10/12/2020 06:35:14 PM:INFO:Clients Handle: joe
+10/12/2020 06:35:14 PM:INFO:b'\n--- joe joined!---\n'
+10/12/2020 06:35:20 PM:INFO:b'joe: jad'
+10/12/2020 06:35:21 PM:INFO:b'joe: alsdjfsad'
+10/12/2020 06:35:21 PM:INFO:b'joe: f'
+10/12/2020 06:35:21 PM:INFO:b'joe: '
+10/12/2020 06:35:22 PM:INFO:b'joe: test'
+10/12/2020 06:35:23 PM:INFO:b'joe: hello'
+10/12/2020 06:35:24 PM:INFO:b'joe: cool'
+10/12/2020 06:35:25 PM:INFO:b'joe: nice'
+10/12/2020 06:35:33 PM:INFO:New Client Connected with: <socket.socket fd=444, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 123), raddr=('127.0.0.1', 51930)> and ('127.0.0.1', 51930)
+10/12/2020 06:35:34 PM:INFO:Clients Handle: test
+10/12/2020 06:35:35 PM:INFO:b'\n--- test joined!---\n'
+10/12/2020 06:35:38 PM:INFO:b'test: hey joe'
+10/12/2020 06:35:41 PM:INFO:b'test: i am test'
+10/12/2020 06:35:44 PM:INFO:b'test: i will kick you'
+10/12/2020 06:35:47 PM:INFO:test -- is running test: /kick joo
+10/12/2020 06:35:47 PM:INFO:User: <socket.socket fd=444, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 123), raddr=('127.0.0.1', 51930)> tried to kick: joo but they were not online!
+10/12/2020 06:35:50 PM:INFO:test -- is running test: /kick joe
+10/12/2020 06:35:50 PM:INFO:b'joe was kicked by an admin'
+10/12/2020 06:35:52 PM:INFO:b'test: '
+10/12/2020 06:35:53 PM:INFO:b'test: adsjfl'
+10/12/2020 06:35:53 PM:INFO:b'test: sadf'
+10/12/2020 06:36:01 PM:INFO:b'\n -----Server:  asdf \n'
+10/12/2020 06:36:02 PM:INFO:b'\n -----Server:  fsda \n'
+10/12/2020 06:36:03 PM:INFO:b'\n -----Server:  sadf \n'
+10/12/2020 06:36:06 PM:INFO:b'test: byby joe'
+10/12/2020 06:36:28 PM:INFO:New Client Connected with: <socket.socket fd=488, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 123), raddr=('127.0.0.1', 51948)> and ('127.0.0.1', 51948)
+10/12/2020 06:36:29 PM:INFO:Clients Handle: joe
+10/12/2020 06:36:30 PM:INFO:b'\n--- joe joined!---\n'
+10/12/2020 06:36:31 PM:INFO:b'joe: lasjdf'
+10/12/2020 06:36:31 PM:INFO:b'joe: asdlfj'
+10/12/2020 06:36:32 PM:INFO:b'joe: asdflj'
+10/12/2020 06:36:36 PM:INFO:b'test: asdf'
+10/12/2020 06:36:36 PM:INFO:b'test: asd'
+10/12/2020 06:38:19 PM:CRITICAL:Line: 143 : Type: <class 'ConnectionResetError'> : Handle Msg Fun: [WinError 10054] An existing connection was forcibly closed by the remote host
+10/12/2020 06:38:19 PM:INFO:b'test : left the chat! '
+10/12/2020 06:38:21 PM:CRITICAL:Line: 143 : Type: <class 'ConnectionResetError'> : Handle Msg Fun: [WinError 10054] An existing connection was forcibly closed by the remote host
+10/12/2020 06:38:21 PM:INFO:b'joe : left the chat! '

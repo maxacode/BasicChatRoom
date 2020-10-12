@@ -1,0 +1,46 @@
+10/12/2020 06:34:56 PM:INFO:
+
+ ----- NEW Client INSTANCE -----
+ OS Info: Windows : Windows-10-10.0.18362-SP0 : 10.0.18362 : ('64bit', 'WindowsPE') : AMD64: LKMLDHZ5ST2 : Intel64 Family 6 Model 158 Stepping 10, GenuineIntel
+10/12/2020 06:35:08 PM:INFO:Connection to: 127.0.0.1 and on port: 123
+10/12/2020 06:35:08 PM:INFO:Connection was Succesfull
+10/12/2020 06:35:14 PM:INFO:Handle Is: joe
+10/12/2020 06:35:20 PM:INFO:joe: jad
+10/12/2020 06:35:21 PM:INFO:joe: alsdjfsad
+10/12/2020 06:35:21 PM:INFO:joe: f
+10/12/2020 06:35:21 PM:INFO:joe: 
+10/12/2020 06:35:22 PM:INFO:joe: test
+10/12/2020 06:35:23 PM:INFO:joe: hello
+10/12/2020 06:35:24 PM:INFO:joe: cool
+10/12/2020 06:35:25 PM:INFO:joe: nice
+10/12/2020 06:35:28 PM:INFO:
+
+ ----- NEW Client INSTANCE -----
+ OS Info: Windows : Windows-10-10.0.18362-SP0 : 10.0.18362 : ('64bit', 'WindowsPE') : AMD64: LKMLDHZ5ST2 : Intel64 Family 6 Model 158 Stepping 10, GenuineIntel
+10/12/2020 06:35:33 PM:INFO:Connection to: 127.0.0.1 and on port: 123
+10/12/2020 06:35:33 PM:INFO:Connection was Succesfull
+10/12/2020 06:35:34 PM:INFO:Handle Is: test
+10/12/2020 06:35:35 PM:INFO:test: pass
+10/12/2020 06:35:38 PM:INFO:test: hey joe
+10/12/2020 06:35:41 PM:INFO:test: i am test
+10/12/2020 06:35:44 PM:INFO:test: i will kick you
+10/12/2020 06:35:47 PM:INFO:test: /kick joo
+10/12/2020 06:35:50 PM:INFO:test: /kick joe
+10/12/2020 06:35:52 PM:INFO:test: 
+10/12/2020 06:35:53 PM:INFO:test: adsjfl
+10/12/2020 06:35:53 PM:INFO:test: sadf
+10/12/2020 06:35:57 PM:INFO:joe: 
+10/12/2020 06:35:57 PM:CRITICAL:Line: 121 : Type: <class 'ConnectionResetError'> : Error in Write Function: [WinError 10054] An existing connection was forcibly closed by the remote host
+10/12/2020 06:36:06 PM:INFO:test: byby joe
+10/12/2020 06:36:22 PM:INFO:
+
+ ----- NEW Client INSTANCE -----
+ OS Info: Windows : Windows-10-10.0.18362-SP0 : 10.0.18362 : ('64bit', 'WindowsPE') : AMD64: LKMLDHZ5ST2 : Intel64 Family 6 Model 158 Stepping 10, GenuineIntel
+10/12/2020 06:36:28 PM:INFO:Connection to: 127.0.0.1 and on port: 123
+10/12/2020 06:36:28 PM:INFO:Connection was Succesfull
+10/12/2020 06:36:29 PM:INFO:Handle Is: joe
+10/12/2020 06:36:31 PM:INFO:joe: lasjdf
+10/12/2020 06:36:31 PM:INFO:joe: asdlfj
+10/12/2020 06:36:32 PM:INFO:joe: asdflj
+10/12/2020 06:36:36 PM:INFO:test: asdf
+10/12/2020 06:36:36 PM:INFO:test: asd
