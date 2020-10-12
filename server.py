@@ -8,7 +8,7 @@
         #Logg connection info
 try:
     #importing socket and threading to work
-    import socket, threading,time,random, uuid, hashlib
+    import socket, threading,time,random, uuid, hashlib, logging, sys, os
     from os import system
     #from socket import *
     from threading import Thread
@@ -17,6 +17,9 @@ try:
     #ip = '127.0.0.1'
     ip = input("Enter an IP address of Server (192.168.1.2): ")
     port = int(input("Input the Port Number (444): "))
+
+    logging.basicConfig(filename='Server.log',encoding='utf-8',level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
+    logging.info(f'\n\n ----- NEW INSTANCE -----\n')
 
     #local Vars
     format = 'utf8'
@@ -44,7 +47,8 @@ try:
         server.bind((ip, port))
         server.listen()
     except Exception as error:
-        print(f'THis error occured when starting server socket: {error}')
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        logging.critical(f'Line: {exc_tb.tb_lineno} : Type: {exc_type} : Starting Socket: {error}')
         #INcreasing socket port number by random 1 to 999 if first bind fails.
         a = random.randint(1,999)
         port += a
@@ -75,10 +79,10 @@ try:
                 continue
             else:
                 print(f'Account: {adminUsers} with password: {adminPass} was added to server admins! \n')
+                logging.info(f'Account: {adminUsers} was added to server admins! ')
                 break
         #hashing password
         salt = uuid.uuid4().hex
-        print(salt)
         hashedPass = hashlib.sha256(salt.encode() + adminPass.encode()).hexdigest() + ':' + salt
 
         #writing account info to file and adding it to varible that will be used to check later. 
@@ -106,6 +110,7 @@ try:
 
         else:
             print("Name not in hanldes")
+            logging.info(f'User: {fromHandle} tried to kick: {name} but they were not online!')
             fromHandle.send("User not Online".encode(format))
     # def infoUser(origClient, name):
     #     if name in handles:
@@ -118,6 +123,7 @@ try:
     #Funciton t send messages to everyone
     def broadcast(message):
         print(message)
+        logging.info(message)
 
         #sending a msg to all the clinets in teh client list
         for client in clients:
@@ -140,6 +146,8 @@ try:
                # Checking if user sent a command.
                 if command[len(handle)+2:len(handle)+3] == '/' and handle in adminAccounts:
                     print(f"{handle} -- is running {command}")
+                    logging.info(f"{handle} -- is running {command}")
+
                     command = command[len(handle) + 2:]
 
                     if kickMsg in command:
@@ -206,7 +214,8 @@ try:
 
             except Exception as error:
                 if client in clients:
-                    print(error)
+                    exc_type, exc_obj, exc_tb = sys.exc_info()
+                    logging.critical(f'Line: {exc_tb.tb_lineno} : Type: {exc_type} : Handle Msg Fun: {error}')                      
                      #Iff error happens we weill disconnect client and remove them from our list.
                     index = clients.index(client)
                     clients.remove(client)
@@ -224,9 +233,11 @@ try:
             try:
                 #Recivng connection from clinet
                 client, address = server.accept()
+                logging.info(f'New Client Connected with: {client} and {address}')
             except Exception as error:
                 if client in clients:
-                    print("Error")
+                    exc_type, exc_obj, exc_tb = sys.exc_info()
+                    logging.critical(f'Line: {exc_tb.tb_lineno} : Type: {exc_type} : Accepting Client Connection (Take Function): {error}')
                     client.send(error)
                     client.close()
                     continue
@@ -248,7 +259,7 @@ try:
             handle = client.recv(1024).decode(format)
             #Chekcing if handle is less than 15 chars
             if len(handle) >= 20:
-                client.send('Please have a handle less than 15 char'.encode(format))
+                client.send('Please have a handle less than 20 char'.encode(format))
                 print("Handle bigger than 20 chars")
                 #print(error)
                 client.close()
@@ -256,6 +267,8 @@ try:
             else:
                 #client.send("\nHandle Accepted \n ".encode(format))
                 print("Handle Acepted")
+                logging.info(f'Clients Handle: {handle}')
+
             #print(f'-{handle}-')
             #
             with open('Banned.txt', 'r') as file:
@@ -308,7 +321,8 @@ try:
                 else:
                     print("User not in adminAccounts")
             except Exception as error:
-                print("Error during auth of admin user")
+                exc_type, exc_obj, exc_tb = sys.exc_info()
+                logging.critical(f'Line: {exc_tb.tb_lineno} : Type: {exc_type} : Auth-Admin: {error}')
                 print(error)
                 pass
 
@@ -351,7 +365,10 @@ try:
                 broadcast(f'\n {serverName} {message} \n'.encode(format))
 
 
-    print(f"Starting Server on {ip,port}")
+   # print(f"Starting Server on {ip,port}")
+    logging.info(f'Server Started on: {ip, port}')
+    print(f'Server Started on: {ip, port}')
+
     #take()
     threadTake = threading.Thread(target=take)
     threadTake.start()
@@ -360,6 +377,7 @@ try:
     threadWrite.start()
 
 except Exception as error:
-    print(error)
-    print("Main errror")
+    exc_type, exc_obj, exc_tb = sys.exc_info()
+    logging.critical(f'Line: {exc_tb.tb_lineno} : Type: {exc_type} : Main TRY Error: {error}')
+    
     input('Press Enter to exit')
