@@ -2,10 +2,11 @@ try:
     #importing socket and threading to work
     import socket, threading, sys, time, logging, os, platform
     from os import system
+    from getpass import getpass
 
-    logging.basicConfig(filename='ClientLog.log',encoding='utf-8',level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
+    logging.basicConfig(filename='ClientLog.log',level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
     logging.info(f'\n\n ----- NEW Client INSTANCE -----\n OS Info: {platform.system()} : {platform.platform()} : {platform.version()} : {platform.architecture()} : {platform.machine()}: {platform.node()} : {platform.processor()}')
-    
+
     #Local Vars
     format = 'utf8'
     clients = []
@@ -71,12 +72,14 @@ try:
                   # print(nextMessage)
 
                     if 'PASS' in nextMessage:
-                        print("Enter Password:")
+                        password = getpass("Enter Password:")
+                        client.send(password.encode(format))
                         msg = client.recv(1024).decode(format)
-                       # client.send(password.encode(format))
+
                         if msg == "REFUSE":
                             logging.info("Wrong Password - Disconnecting")
                             print("Wrong Password - Disconnecting")
+                            time.sleep(5)
                             stopThread = True
                         else:
                             print(msg)
@@ -85,6 +88,8 @@ try:
                         print("You are Banned! Hint:Try another username")
                         print("Logging Off!")
                         stopThread = True
+
+                    threadWrite.start()
 
                 elif "were kicked by an admin!" in message:
                     print(message)
@@ -124,14 +129,13 @@ try:
                 logging.critical(f'Line: {exc_tb.tb_lineno} : Type: {exc_type} : Error in Write Function: {error}')
                 break
 
-     
+
 
     #Threads for taking and writing
     threadTake = threading.Thread(target=take)
     threadTake.start()
 
     threadWrite = threading.Thread(target=write)
-    threadWrite.start()
 
 except Exception as error:
     exc_type, exc_obj, exc_tb = sys.exc_info()

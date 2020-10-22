@@ -10,6 +10,7 @@ try:
     #importing socket and threading to work
     import socket, threading,time,random, uuid, hashlib, logging, sys, os
     from os import system
+    from getpass import getpass
     #from socket import *
     from threading import Thread
     #Port and IP config options. Either static or ask on launch
@@ -18,7 +19,7 @@ try:
     ip = input("Enter an IP address of Server (192.168.1.2): ")
     port = int(input("Input the Port Number (444): "))
 
-    logging.basicConfig(filename='Server.log',encoding='utf-8',level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
+    logging.basicConfig(filename='Server.log',level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
     logging.info(f'\n\n ----- NEW INSTANCE -----\n')
 
     #local Vars
@@ -39,7 +40,7 @@ try:
     helpMsg = "/help"
     regularCommands = ['/exit: To Exit the Program\n /help: For list of all commands\n /online: List of Who is Online']
     adminCommands = regularCommands + ['\n/kick: ''To kick a user temporarily \n /ban: To fully ban a username\n']
-   
+
    #starting socket
     try:
         print(f'Trying: {ip} and {port}')
@@ -64,16 +65,16 @@ try:
         with open('.adminAccounts.encrypted','r') as file:
             adminAccounts = dict(map(str.split, file))
             print(f'These are the existing admin accounts: {adminAccounts}\n')
-            cont = input("Would you like to add more admin Accounts? (y/n): ") 
-            if cont == 'n': 
+            cont = input("Would you like to add more admin Accounts? (y/n): ")
+            if cont == 'n':
                 break
         adminUsers = input("\nEnter a username for a admin account (Type in 'done' when finished): ")
         if adminUsers == 'done':
             break
         #Making sure passwords match
         while True:
-            adminPass = input("Enter Password: ")
-            adminPass2 = input("Re-Enter Password: ") 
+            adminPass = getpass("Enter Password (Input will be blank): ")
+            adminPass2 = getpass("Re-Enter Password (Input will be blank): ")
             if adminPass2 != adminPass:
                 print("Passwords dont match - lets try again")
                 continue
@@ -85,14 +86,14 @@ try:
         salt = uuid.uuid4().hex
         hashedPass = hashlib.sha256(salt.encode() + adminPass.encode()).hexdigest() + ':' + salt
 
-        #writing account info to file and adding it to varible that will be used to check later. 
+        #writing account info to file and adding it to varible that will be used to check later.
         with open('.adminAccounts.encrypted','a+') as file:
-            account = (adminUsers + ' ' + hashedPass) 
+            account = (adminUsers + ' ' + hashedPass)
             file.write(f'{account}\n')
             print(f"{account}-wrote user to adminAccounts file")
 
     print("-----Done with Admin account creation!-----\n")
-    #Getting accounts from file 
+    #Getting accounts from file
     with open('.adminAccounts.encrypted','r') as file:
         adminAccounts = dict(map(str.split, file))
 
@@ -215,7 +216,7 @@ try:
             except Exception as error:
                 if client in clients:
                     exc_type, exc_obj, exc_tb = sys.exc_info()
-                    logging.critical(f'Line: {exc_tb.tb_lineno} : Type: {exc_type} : Handle Msg Fun: {error}')                      
+                    logging.critical(f'Line: {exc_tb.tb_lineno} : Type: {exc_type} : Handle Msg Fun: {error}')
                      #Iff error happens we weill disconnect client and remove them from our list.
                     index = clients.index(client)
                     clients.remove(client)
@@ -291,7 +292,7 @@ try:
                     adminAccounts = dict(map(str.split, file))
                            # print(adminAccounts)
                     #adminAccounts = {'admin':'adminpass','jane':'janepass'}
-                print(adminAccounts)
+               # print(adminAccounts)
 
                 print("Trying if handle in adminAccounts {}".format(handle))
                 #Seeing if user has admin rights
@@ -302,9 +303,10 @@ try:
                     client.send("PASS".encode(format))
 
                     password = client.recv(1024).decode(format)
-                    password = password[len(handle)+2:]
+                    print(password)
+                   # password = password[len(handle)+2:]
                     print(f'-{password}-')
-                    print(password[len(handle)+2:])
+                    #print(password[len(handle)+2:])
                     #Checking if password is right
                     hashPass, salt = adminAccounts[handle].split(':')
                     enteredHashedPass = hashlib.sha256(salt.encode()+password.encode()).hexdigest()
@@ -312,7 +314,7 @@ try:
                     if enteredHashedPass != hashPass:
                         print("WRong password")
                         client.send("REFUSE".encode(format))
-                        client.close()  
+                        client.close()
                         continue
 
                     else:
@@ -350,14 +352,14 @@ try:
             #input from server
             serverName = '-----Server: '
             message =input('')
-            #checking if special command. 
+            #checking if special command.
             if message.startswith('/'):
                 closeIn = int(input("When to shut down server: "))
                 howLongDown = int(input("How long will it be down: "))
 
                 if message.startswith('/close'):
                     reason = ('{} \n Will shut down in: {} Seconds! \n and will come back in {} Min!\n'.format(serverName, message[7:],closeIn, howLongDown))
-                   # reason = serverName + message[7:] + ' Will shut down in: ' + {closeIn} + 'Min! \n ' 
+                   # reason = serverName + message[7:] + ' Will shut down in: ' + {closeIn} + 'Min! \n '
                     broadcast(reason.encode(format))
                     time.sleep(closeIn)
                     stopThread = True
@@ -379,5 +381,5 @@ try:
 except Exception as error:
     exc_type, exc_obj, exc_tb = sys.exc_info()
     logging.critical(f'Line: {exc_tb.tb_lineno} : Type: {exc_type} : Main TRY Error: {error}')
-    
+
     input('Press Enter to exit')
