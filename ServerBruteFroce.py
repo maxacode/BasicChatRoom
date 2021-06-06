@@ -3,20 +3,21 @@ import socket, threading
 # setting static handle since we know "Max" is admin on the server.
 
 
-hanlde = 'hello'
+
 global handle
+handle = 'joe'
 
 format = 'utf8'
 
-passwords = ('hello', 'test','pass','password', 'ljadsklf','123k12kl','123jl12k;j3','kdsjfl;ksdf','123123','adsfasdf', 'adsfa','asdfasdf')
+passwords = ('hello', 'test','password', 'ljadsklf','123k12kl','123jl12k;j3','kdsjfl;ksdf','123123','adsfasdf', 'adsfa','asdfasdf')
 
 
-def connection(username, password):
+def connection():
 
     for x in passwords:
 
         client = socket.socket()
-        client.connect(("142.47.221.217", 443))
+        client.connect(("142.47.221.217", 444))
         print("Connection Sucesfull")
 
 
@@ -51,5 +52,5 @@ def connection(username, password):
 
 
 
-threadTake = threading.Thread(target=connection('Max', 'testpass'))
+threadTake = threading.Thread(target=connection())
 threadTake.start()
