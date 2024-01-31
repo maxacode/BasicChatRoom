@@ -24,8 +24,8 @@ try:
     #Port and IP config options. Either static or ask on launch
     #port = 12000
     #ip = '127.0.0.1'
-    ip = input("Enter an IP/Hose address of Server (192.168.1.2/chatserver.com): ")
-    port = int(input("Input the Port Number (444): "))
+    ip = input("Enter an IP/Hose address of Server (IP or Domain): ")
+    port = int(input("Input the Port Number (5555): "))
     #ip = input("Enter an IP/URL of Server (192.168.1.2): ")
 
     #Vars from client
@@ -47,7 +47,7 @@ try:
         exit()
 
     handle = input("Enter Your Handle: ")
-    system("title "+(f'Connected to: {ip} with Port: {port} and Handle: {handle}'))
+    print(f'Connected to: {ip} with Port: {port} and Handle: {handle}')
     logging.info(f'Handle Is: {handle}')
 
     #Reciving fucntion

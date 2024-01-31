@@ -44,3 +44,25 @@
 10/12/2020 06:36:32 PM:INFO:joe: asdflj
 10/12/2020 06:36:36 PM:INFO:test: asdf
 10/12/2020 06:36:36 PM:INFO:test: asd
+01/31/2024 02:26:28 PM:INFO:
+
+ ----- NEW Client INSTANCE -----
+ OS Info: Darwin : macOS-14.2.1-arm64-arm-64bit : Darwin Kernel Version 23.2.0: Wed Nov 15 21:54:05 PST 2023; root:xnu-10002.61.3~2/RELEASE_ARM64_T6031 : ('64bit', '') : arm64: Makss-MBP.lan : arm
+01/31/2024 02:26:36 PM:INFO:Connection to: 127.0.0.1 and on port: 5555
+01/31/2024 02:26:36 PM:INFO:Connection was Succesfull
+01/31/2024 02:26:40 PM:INFO:Handle Is: maks
+01/31/2024 02:26:46 PM:INFO:maks: /help
+01/31/2024 02:28:54 PM:INFO:
+
+ ----- NEW Client INSTANCE -----
+ OS Info: Darwin : macOS-14.2.1-arm64-arm-64bit : Darwin Kernel Version 23.2.0: Wed Nov 15 21:54:05 PST 2023; root:xnu-10002.61.3~2/RELEASE_ARM64_T6031 : ('64bit', '') : arm64: Makss-MBP.lan : arm
+01/31/2024 02:29:00 PM:INFO:Connection to: 127.0.0.1 and on port: 5555
+01/31/2024 02:29:00 PM:INFO:Connection was Succesfull
+01/31/2024 02:29:08 PM:INFO:Handle Is: maks
+01/31/2024 02:30:07 PM:INFO:
+
+ ----- NEW Client INSTANCE -----
+ OS Info: Darwin : macOS-14.2.1-arm64-arm-64bit : Darwin Kernel Version 23.2.0: Wed Nov 15 21:54:05 PST 2023; root:xnu-10002.61.3~2/RELEASE_ARM64_T6031 : ('64bit', '') : arm64: Makss-MBP.lan : arm
+01/31/2024 02:30:10 PM:INFO:Connection to:  and on port: 5555
+01/31/2024 02:30:10 PM:INFO:Connection was Succesfull
+01/31/2024 02:30:11 PM:INFO:Handle Is: maks

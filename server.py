@@ -17,7 +17,7 @@ try:
     #port = 12000
     #ip = '127.0.0.1'
     ip = input("Enter an IP address of Server (192.168.1.2): ")
-    port = int(input("Input the Port Number (444): "))
+    port = int(input("Input the Port Number (5555): "))
 
     logging.basicConfig(filename='Server.log',level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
     logging.info(f'\n\n ----- NEW INSTANCE -----\n')
@@ -38,8 +38,8 @@ try:
     msgMsg= "/msg"
     onlineMsg = "/online"
     helpMsg = "/help"
-    regularCommands = ['/exit: To Exit the Program\n /help: For list of all commands\n /online: List of Who is Online']
-    adminCommands = regularCommands + ['\n/kick: ''To kick a user temporarily \n /ban: To fully ban a username\n']
+    regularCommands = [f"/exit: To Exit the Program\n /help: For list of all commands\n /online: List of Who is Online"]
+    adminCommands = regularCommands + ["\n/kick: ''To kick a user temporarily \n /ban: To fully ban a username\n"]
 
    #starting socket
     try:
