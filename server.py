@@ -7,6 +7,19 @@
         #Logg all chat messages
         #Logg connection info
 try:
+    import sentry_sdk
+
+    sentry_sdk.init(
+        dsn="https://0646d67cebddf25664db691dce03c854@o1176942.ingest.sentry.io/4506667638784000",
+        # Set traces_sample_rate to 1.0 to capture 100%
+        # of transactions for performance monitoring.
+        traces_sample_rate=1.0,
+        # Set profiles_sample_rate to 1.0 to profile 100%
+        # of sampled transactions.
+        # We recommend adjusting this value in production.
+        profiles_sample_rate=1.0,
+    )
+
     #importing socket and threading to work
     import socket, threading,time,random, uuid, hashlib, logging, sys, os
     from os import system
@@ -16,7 +29,7 @@ try:
     #Port and IP config options. Either static or ask on launch
     #port = 12000
     #ip = '127.0.0.1'
-    ip = input("Enter an IP address of Server (192.168.1.2): ")
+    ip = input("Enter an IP address of Server: ")
     port = int(input("Input the Port Number (5555): "))
 
     logging.basicConfig(filename='Server.log',level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')

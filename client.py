@@ -1,4 +1,17 @@
 try:
+    import sentry_sdk
+
+    sentry_sdk.init(
+        dsn="https://0646d67cebddf25664db691dce03c854@o1176942.ingest.sentry.io/4506667638784000",
+        # Set traces_sample_rate to 1.0 to capture 100%
+        # of transactions for performance monitoring.
+        traces_sample_rate=1.0,
+        # Set profiles_sample_rate to 1.0 to profile 100%
+        # of sampled transactions.
+        # We recommend adjusting this value in production.
+        profiles_sample_rate=1.0,
+    )
+
     #importing socket and threading to work
     import socket, threading, sys, time, logging, os, platform
     from os import system
